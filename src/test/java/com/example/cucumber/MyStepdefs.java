@@ -1,11 +1,9 @@
 package com.example.cucumber;
 
-
 import io.cucumber.java.hr.I;
 import io.cucumber.java.hr.Kada;
 import io.cucumber.java.hr.Onda;
 import io.cucumber.java.hr.Zadano;
-import org.jruby.runtime.callsite.AsetCallSite;
 import org.junit.Assert;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
@@ -93,8 +91,8 @@ public class MyStepdefs {
         Assert.assertTrue(wikipedijaPortalGlazba.getPageTitle().contains(titleExpected));
     }
 
-    @Kada("odaberem link {string}")
-    public void odaberemLink(String linkTitle) {
+    @Kada("odaberem link Beatles")
+    public void odaberemLink() {
         WikipedijaPortalGlazba wikipedijaPortalGlazba=new WikipedijaPortalGlazba(driver);
         wikipedijaPortalGlazba.chooseLinkBeatles();
     }
@@ -102,7 +100,7 @@ public class MyStepdefs {
     @Onda("će mi se prikazati stranica o bendu {string}")
     public void ćeMiSePrikazatiStranicaOBendu(String titleExpected) {
         WikipedijaPortalBeatles wikipedijaPortalBeatles=new WikipedijaPortalBeatles(driver);
-        wikipedijaPortalBeatles.getPageTitle();
+        Assert.assertTrue(wikipedijaPortalBeatles.getPageTitle().contains(titleExpected));
     }
 
     @Kada("u tražilicu Pretraži Wikipedija upišem {string}")
@@ -198,6 +196,7 @@ public class MyStepdefs {
     public void poveznicaZaPrijavuBiSeTrebalaPrikazati() {
         WikipedijaGlavnaStranica wikipedijaGlavnaStranica=new WikipedijaGlavnaStranica(driver);
         Assert.assertTrue(wikipedijaGlavnaStranica.checkPrijava());
+        driver.close();
     }
 
     @Onda("mi je prikazan tekst {string}")
@@ -210,5 +209,38 @@ public class MyStepdefs {
     public void korisničkoImePrijavljenogKorisnikaBiTrebaloBiti(String username) {
         WikipedijaGlavnaStranica wikipedijaGlavnaStranica=new WikipedijaGlavnaStranica(driver);
         Assert.assertTrue(wikipedijaGlavnaStranica.getNameOfLoginUser().contains(username));
+    }
+
+    @Kada("u tražilicu upišem {string}")
+    public void uTražilicuUpišem(String searchInput) {
+        WikipedijaGlavnaStranica wikipedijaGlavnaStranica=new WikipedijaGlavnaStranica(driver);
+        wikipedijaGlavnaStranica.clickOnSearchInput();
+        wikipedijaGlavnaStranica.clickOnSearchInput();
+        wikipedijaGlavnaStranica.writeText(searchInput);
+    }
+
+    @I("odaberem gumb za pretragu")
+    public void odaberemGumbZaPretragu() {
+        WikipedijaGlavnaStranica wikipedijaGlavnaStranica=new WikipedijaGlavnaStranica(driver);
+        wikipedijaGlavnaStranica.clickOnSearchButton();
+    }
+
+    @Onda("mi se pojavi portal naziva {string}")
+    public void miSePojaviPortalNaziva(String titleExpected) {
+        WikipedijaPortalVlak wikipedijaPortalVlak=new WikipedijaPortalVlak(driver);
+        Assert.assertTrue(wikipedijaPortalVlak.getTitleText().contains(titleExpected));
+    }
+
+    @Kada("odaberem poveznicu {string}")
+    public void odaberemPoveznicu(String arg0) {
+        WikipedijaPortalVlak wikipedijaPortalVlak=new WikipedijaPortalVlak(driver);
+        wikipedijaPortalVlak.chooseLinkMaglevVlak();
+    }
+
+    @Onda("mi se prikazuje stranica naziva {string}")
+    public void miSePrikazujeStranicaNaziva(String titleExpected) {
+        WikipedijaMaglevVlak wikipedijaMaglevVlak=new WikipedijaMaglevVlak(driver);
+        Assert.assertTrue(wikipedijaMaglevVlak.getTitleText().contains(titleExpected));
+        driver.close();
     }
 }

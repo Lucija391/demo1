@@ -29,6 +29,12 @@ public class WikipedijaGlavnaStranica {
     @FindBy(id="pt-userpage")
     WebElement loginUser;
 
+    @FindBy(id="searchInput")
+    WebElement search;
+
+    @FindBy(id="searchButton")
+    WebElement searchButton;
+
     public WikipedijaGlavnaStranica(WebDriver driver){
         this.driver=driver;
         PageFactory.initElements(driver,this);
@@ -70,5 +76,15 @@ public class WikipedijaGlavnaStranica {
         return loginUser.getText();
     }
 
+    public void clickOnSearchInput(){
+        search.click();
+    }
+    public void writeText(String searchInput){
+        search.clear();
+        search.sendKeys(searchInput);
+    }
 
+    public void clickOnSearchButton(){
+        searchButton.click();
+    }
 }
